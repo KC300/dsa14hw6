@@ -1,5 +1,7 @@
 CC = gcc
 CXX = g++
+CFLAGS = -O2 -std=c99 -Wall
+CXXFLAGS = -O2 -std=c++11 -Wall
 PROB1 = hw6_2_1
 PROB2 = hw6_2_2
 TARGET = $(PROB1) $(PROB2)
@@ -14,16 +16,16 @@ RM = rm -rf
 all: $(TARGET)
 
 %.o:%.c
-	$(CC) $< -c
+	$(CC) $(CFLAGS) $< -c
 
 %.o:%.cpp
-	$(CXX) $< -c
+	$(CXX) $(CXXFLAGS) $< -c
 
 $(PROB1): $(OBJ1)
-	$(CXX) $(OBJ1) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ1) -o $@
 
 $(PROB2): $(OBJ2)
-	$(CXX) $(OBJ2) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ2) -o $@
 
 pre: $(OBJS)
 
