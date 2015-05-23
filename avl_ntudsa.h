@@ -44,8 +44,10 @@ struct avl_table
 struct avl_node
   {
     struct avl_node *avl_link[2];  /* Subtrees. */
+    int  avl_cnt;
     int  avl_cnode[2];             /* count node */
-    void *avl_data;                /* Pointer to data. */
+    long long int  avl_sum[2];     /* count node */
+    int  avl_data;                 /* int data. */
     signed char avl_balance;       /* Balance factor. */
   };
 
@@ -63,7 +65,6 @@ struct avl_traverser
 /* Table functions. */
 struct avl_table *avl_create (avl_comparison_func *, void *,
                               struct libavl_allocator *);
-void **avl_probe (struct avl_table *, void *);
-void avl_destroy (struct avl_table *, avl_item_func *);
+int *avl_probe (struct avl_table *, int);
 #define avl_count(table) ((size_t) (table)->avl_count)
 #endif /* avl.h */
