@@ -46,7 +46,7 @@ struct avl_node
     struct avl_node *avl_link[2];  /* Subtrees. */
     int  avl_cnt;
     int  avl_cnode[2];             /* count node */
-    long long int  avl_sum[2];     /* count node */
+    long long int  avl_sum[2];     /* sum of the key */
     int  avl_data;                 /* int data. */
     signed char avl_balance;       /* Balance factor. */
   };
