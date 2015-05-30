@@ -50,7 +50,7 @@ avl_probe (struct avl_table *tree, int item) /* change code by Yen-Chieh */
 
   assert (tree != NULL);
 
-  z = (struct avl_node *) &tree->avl_root;
+  z = NULL;
   y = tree->avl_root;
   dir = 0;
   for (q = z, p = y; p != NULL; q = p, p = p->avl_link[dir])
@@ -68,8 +68,14 @@ avl_probe (struct avl_table *tree, int item) /* change code by Yen-Chieh */
       p->avl_sum[dir] += (long long int)item; /* add code by Yen-Chieh */
     }
 
-  n = q->avl_link[dir] =
-    tree->avl_alloc->libavl_malloc (tree->avl_alloc, sizeof *n);
+  n = tree->avl_alloc->libavl_malloc (tree->avl_alloc, sizeof *n);
+  if (q == NULL)
+    {
+      assert(tree->avl_root == NULL);
+      tree->avl_root = n;
+    }
+  else
+    q->avl_link[dir] = n;
 
   if (n == NULL)
     return NULL;
@@ -206,7 +212,7 @@ avl_probe (struct avl_table *tree, int item) /* change code by Yen-Chieh */
     return &n->avl_data;
 
   /* add code by Yen-Chieh */
-  if (z != (struct avl_node*) &tree->avl_root)
+  if (z != NULL)
     {
       tmp3 = (y != z->avl_link[0]);
       z->avl_link[tmp3] = w;
