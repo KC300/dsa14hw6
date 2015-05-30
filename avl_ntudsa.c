@@ -205,20 +205,26 @@ avl_probe (struct avl_table *tree, int item) /* change code by Yen-Chieh */
   else
     return &n->avl_data;
 
-  tmp3 = (y != z->avl_link[0]); /* add code by Yen-Chieh */
-
-  z->avl_link[tmp3] = w;
-
   /* add code by Yen-Chieh */
-  if (w != NULL)
+  if (z != (struct avl_node*) &tree->avl_root)
     {
-      z->avl_cnode[tmp3] = w->avl_cnode[0] + w->avl_cnt + w->avl_cnode[1];
-      z->avl_sum[tmp3] = w->avl_sum[0] + (long long int)w->avl_cnt * w->avl_data + w->avl_sum[1];
+      tmp3 = (y != z->avl_link[0]);
+      z->avl_link[tmp3] = w;
+
+      if (w != NULL)
+        {
+          z->avl_cnode[tmp3] = w->avl_cnode[0] + w->avl_cnt + w->avl_cnode[1];
+          z->avl_sum[tmp3] = w->avl_sum[0] + (long long int)w->avl_cnt * w->avl_data + w->avl_sum[1];
+        }
+      else
+        {
+          z->avl_cnode[tmp3] = 0;
+          z->avl_sum[tmp3] = 0ll;
+        }
     }
   else
     {
-      z->avl_cnode[tmp3] = 0;
-      z->avl_sum[tmp3] = 0ll;
+      tree->avl_root = w;
     }
 
   tree->avl_generation++;
